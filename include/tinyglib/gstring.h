@@ -1,3 +1,4 @@
+/*!
 MIT License
 
 Copyright (c) 2024 Jacob Hummer
@@ -19,3 +20,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#ifndef GSTRING_H
+#define GSTRING_H
+
+#include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdatomic.h>
+
+typedef struct {
+    char* str;
+    size_t len;
+    size_t allocated_len;
+} GString;
+
+GString* g_string_new(const char* init);
+
+GString* g_string_new_take(char* init);
+
+GString* g_string_new_len(const char* init, ssize_t len);
+
+GString* g_string_sized_new(size_t dfl_size);
+
+#endif // GSTRING_H

@@ -1,131 +1,38 @@
-# CLib
+## Installation
 
-CLib is a header-only library for C99 that implements the most important classes
-from GLib: **GArray**, **GHashTable**, **GList** and **GString**.
-
-GLib is a great library that provides some classes that are so useful that you
-want to use them in every C project. For some of them you might even wish they
-were part of the C standard libraray.
-
-Unfortunately, GLib is a bit too heavy for many projects. An additional problem
-that prevents its wide-spread use is its license: Many people don't want to use
-LGPL licensed code or want to link everything statically which is in many cases
-prevented by the LGPL.
-
-Therefore CLib implements the APIs of the most important classes as header-only
-libs under the MIT license.
+```sh
+wget https://github.com/jcbhmr/tinyglib/releases/download/v2.83.0/garray.h
+wget https://github.com/jcbhmr/tinyglib/releases/download/v2.83.0/ghash.h
+wget https://github.com/jcbhmr/tinyglib/releases/download/v2.83.0/gstring.h
+```
 
 ## Usage
 
-Pick the header files of the classes you want to use from *src/*, copy them to
-a location in your project where header files are found by the compiler, and
-include them in your C project files.
-
-When you include a class for the first time in a compilation unit you need to
-define *_CLIB_IMPL* to tell the preprocessor that you want the declarations
-AND the implementations of the functions:
+<div><code>main.c</code></div>
 
 ```c
-#define _CLIB_IMPL 1
-#include <gstring.h>
+#include <stdio.h>
+#include "garray.h"
+#include "ghash.h"
+#include "gstring.h"
+
+int main() {
+    GString *s = g_string_new_len("He\0llo Alan\0 Turing!", 20);
+    int n = 0;
+    for (unsigned int i = 0; i < s->len; i++) {
+        if (s->str[i] == '\0') {
+            n++;
+        }
+    }
+    printf("'%.*s' contains %d NUL chars\n", (int)s->len, s->str, n);
+}
 ```
 
-Whenever you use the same library again in the same compilation unit you only
-need to include the header file:
-
-```c
-#include <gstring.h>
+```sh
+cc main.c
+./a.out
 ```
 
-## Documentation
-
-Since clib aims to be as API compatible as possible with GLib it is best to look
-up the respective class in the GLib documentation:
-
-[GArray](https://libsoup.org/glib/glib-Arrays.html)
-
-[GHashTable](https://libsoup.org/glib/glib-Hash-Tables.html)
-
-[GList](https://libsoup.org/glib/glib-Doubly-Linked-Lists.html)
-
-[GString](https://libsoup.org/glib/glib-Strings.html)
-
-Most methods are implemented. Missing methods and different behaviour are
-considered bugs.
-
-Pull requests are welcome!
-
-## Out of Memory Errors
-
-This library handles out of memory errors by printing an error message to
-*stderr* and terminating the program via a call to *exit(1)*. This behaviour is
-controversial and depending on your use case it might prevent you from using
-clib. Unfortunately, this is how GLib handles out of memory errors and since
-a goal of this lib is to be compatible with GLib we have to handle it the same
-way.
-
-For most use cases (like the ones for which people use GLib) this shouldn't be a
-big problem, though.
-
-## Building the Tests
-
-Since this library is header-only the only purpose of the build system is to
-build the tests.
-
-The tests can be built with the following commands on Linux and macOS:
-
-```bash
-mkdir build
-cd build
-conan install .. --build=missing
-cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
-make
 ```
-
-And on Windows with Visual Studio 2022:
-
-```bash
-md build
-cd build
-conan install .. --build=missing
-cmake .. -G "Visual Studio 17"
-cmake --build . --config Debug
-```
-
-You can create a release build on Linux and macOS with:
-
-```bash
-cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
-make
-```
-
-And on Windows with:
-
-```bash
-cmake --build . --config Release
-```
-
-The following build types are supported (only on UNIX):
-
-|Name | Description |
-|---|---|
-| Debug | Build with debug info but without a sanitizer |
-| Release | Build with full optimization and without debug support |
-| asan | Build with debug and address sanitizer |
-| lsan | Build with debug and leak sanitizer |
-| msan | Build with debug and memory sanitizer |
-| ubsan | Build with debug and undefined behaviour sanitizer |
-
-For most development purposes it is best to create an address sanitizer build:
-
-```bash
-cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=asan
-```
-
-### Asan on Windows
-
-MSVC supports only Asan at the moment. To build with it use the following command:
-
-```bash
-cmake --build . --config Asan
+'Hello Alan Turing!' contains 2 NUL chars
 ```
