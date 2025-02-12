@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <check.h>
-
-#define _CLIB_IMPL 1
-#include "garray.h"
-#include "ghashtable.h"
-#include "glist.h"
-#include "gstring.h"
+#include <miniglib/garray.h>
+#include <miniglib/ghashtable.h>
+#include <miniglib/glist.h>
+#include <miniglib/gstring.h>
 
 START_TEST(test_integration)
 {

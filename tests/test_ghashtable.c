@@ -1,11 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
 #include <check.h>
-
-#define _CLIB_IMPL 1
-#include "ghashtable.h"
+#include <miniglib/ghashtable.h>
 
 // declare internal functions of GHashTable here so we can test them
 uint32_t _g_hash_table_find_free_slot(GHashTable *hash_table, uint32_t start_slot, void *key);

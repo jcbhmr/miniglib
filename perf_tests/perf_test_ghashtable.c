@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <time.h>
-
-#define _CLIB_IMPL 1
-#include "ghashtable.h"
+#include <miniglib/ghashtable.h>
 
 #define CALC_SECONDS(start, end) (double) (end - start) / CLOCKS_PER_SEC
 

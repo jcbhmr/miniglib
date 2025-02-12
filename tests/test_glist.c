@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <check.h>
-
-#define _CLIB_IMPL 1
-#include "glist.h"
+#include <miniglib/glist.h>
 
 int simple_comp_func(const void *a, const void *b)
 {

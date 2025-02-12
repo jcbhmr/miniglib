@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <check.h>
-
-#define _CLIB_IMPL 1
-#include "garray.h"
+#include <miniglib/garray.h>
 
 int compare_int(const void *a, const void *b)
 {

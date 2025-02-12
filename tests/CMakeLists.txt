@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(CLIB_SRC_DIR "../src")
+set(CLIB_SRC_DIR "../include")
 
 #
 # GArray
