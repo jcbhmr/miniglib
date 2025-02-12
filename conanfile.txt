@@ -1,9 +1,7 @@
 [requires]
 libcheck/0.15.2
-
 [generators]
-cmake_find_package
-cmake_paths
-
-[options]
-libcheck:with_subunit=False
+CMakeDeps
+CMakeToolchain
+[layout]
+cmake_layout
