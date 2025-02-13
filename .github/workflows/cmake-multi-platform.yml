@@ -27,6 +27,8 @@ jobs:
       env:
         CC: ${{ matrix.cc }}
         CXX: ${{ matrix.cxx }}
+        CMAKE_BUILD_TYPE: Debug
+        CTEST_OUTPUT_ON_FAILURE: "1"
       run: cmake --preset default
 
     - name: Build
