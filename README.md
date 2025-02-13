@@ -19,7 +19,7 @@ TODO: Publish to a library repository or something
 
 ```sh
 git submodule add https://github.com/jcbhmr/miniglib.git
-git -C ./miniglib switch v1.0.0
+git -C ./miniglib switch --detach v1.0.0
 ```
 
 ```sh
