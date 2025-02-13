@@ -9,7 +9,6 @@
             "name": "default",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "environment": {
-                "CC": "clang-18",
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CTEST_OUTPUT_ON_FAILURE": "1"
             }
