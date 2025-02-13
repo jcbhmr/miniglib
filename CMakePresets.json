@@ -8,8 +8,10 @@
         {
             "name": "default",
             "binaryDir": "${sourceDir}/build/${presetName}",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
+            "environment": {
+                "CC": "clang-18",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CTEST_OUTPUT_ON_FAILURE": "1"
             }
         }
     ],

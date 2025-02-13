@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.30)
 
 project(miniglib
-    VERSION "2.81.0"
+    VERSION "1.0.0"
     DESCRIPTION "📄 Just the core GLib types: GString, GArray, and GHashTable"
     HOMEPAGE_URL "https://github.com/jcbhmr/miniglib"
     LANGUAGES C

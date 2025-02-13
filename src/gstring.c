@@ -6,11 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
-
-#ifdef _MSC_VER
-#include <BaseTsd.h>
-typedef SSIZE_T ssize_t;
-#endif
+#include <stddef.h>
 
 #define _GSTRING_LTOA_BUF_SIZE (sizeof(long) * 8 + 1)
 
@@ -131,7 +127,7 @@ GString* g_string_new_len(const char *init, size_t len)
     return string;
 }
 
-GString* g_string_sized_new(ssize_t dfl_size)
+GString* g_string_sized_new(ptrdiff_t dfl_size)
 {
     GString *string;
 
@@ -208,7 +204,7 @@ GString* g_string_append_c(GString *string, char c)
     return g_string_append_len(string, &c, 1);
 }
 
-GString* g_string_append_len(GString *string, const char *val, ssize_t len)
+GString* g_string_append_len(GString *string, const char *val, ptrdiff_t len)
 {
     if (len <= 0) {
         return string;
@@ -245,7 +241,7 @@ GString* g_string_prepend_c(GString *string, char c)
     return g_string_prepend_len(string, &c, 1);
 }
 
-GString* g_string_prepend_len(GString *string, const char *val, ssize_t len)
+GString* g_string_prepend_len(GString *string, const char *val, ptrdiff_t len)
 {
     if (val == NULL) {
         return string;
@@ -268,7 +264,7 @@ GString* g_string_prepend_len(GString *string, const char *val, ssize_t len)
     return string;
 }
 
-GString* g_string_insert(GString *string, ssize_t pos, const char *val)
+GString* g_string_insert(GString *string, ptrdiff_t pos, const char *val)
 {
     if (val == NULL) {
         return string;
@@ -277,19 +273,19 @@ GString* g_string_insert(GString *string, ssize_t pos, const char *val)
     return g_string_insert_len(string, pos, val, strlen(val));
 }
 
-GString* g_string_insert_c(GString *string, ssize_t pos, char c)
+GString* g_string_insert_c(GString *string, ptrdiff_t pos, char c)
 {
     return g_string_insert_len(string, pos, &c, 1);
 }
 
-GString* g_string_insert_len(GString *string, ssize_t pos, const char *val, ssize_t len)
+GString* g_string_insert_len(GString *string, ptrdiff_t pos, const char *val, ptrdiff_t len)
 {
     if (pos < 0) {
         return string;
     }
 
     // pos beyond last char of string?
-    if (pos > (ssize_t) string->len) {
+    if (pos > (ptrdiff_t) string->len) {
         fprintf(stderr, "Critical: g_string_insert_len: pos (%zd) > string->len (%zu)\n", pos, string->len);
         return string;
     }
@@ -298,10 +294,10 @@ GString* g_string_insert_len(GString *string, ssize_t pos, const char *val, ssiz
         return string;
     }
 
-    ssize_t new_len = string->len + len;
+    ptrdiff_t new_len = string->len + len;
 
     // enlarge buffer?
-    if (new_len + 1 > (ssize_t) string->allocated_len) {
+    if (new_len + 1 > (ptrdiff_t) string->allocated_len) {
         _g_string_resize(string, new_len + 1);
     }
 
@@ -321,14 +317,14 @@ GString* g_string_overwrite(GString *string, size_t pos, const char *val)
     return g_string_overwrite_len(string, pos, val, strlen(val));
 }
 
-GString* g_string_overwrite_len(GString *string, size_t pos, const char *val, ssize_t len)
+GString* g_string_overwrite_len(GString *string, size_t pos, const char *val, ptrdiff_t len)
 {
     if (pos < 0) {
         return string;
     }
 
     // pos beyond last char of string?
-    if (pos > (ssize_t) string->len) {
+    if (pos > (ptrdiff_t) string->len) {
         fprintf(stderr, "Critical: g_string_overwrite_len: pos (%zd) > string->len (%zu)\n", pos, string->len);
         return string;
     }
@@ -368,7 +364,7 @@ unsigned int g_string_replace(GString *string, const char *find, const char *rep
     // if the find string is empty we insert the replace string at the beginning
     // and end of the string as well as after each character
     if (find[0] == '\0') {
-        for (ssize_t i = 0; i < string->len; i++) {
+        for (ptrdiff_t i = 0; i < string->len; i++) {
             g_string_insert(string, i, replace);
             i += replace_len;
             replacements++;
@@ -423,7 +419,7 @@ unsigned int g_string_replace(GString *string, const char *find, const char *rep
     return replacements;
 }
 
-GString* g_string_erase(GString *string, ssize_t pos, ssize_t len)
+GString* g_string_erase(GString *string, ptrdiff_t pos, ptrdiff_t len)
 {
     if (pos < 0) {
         return string;
@@ -434,13 +430,13 @@ GString* g_string_erase(GString *string, ssize_t pos, ssize_t len)
     }
 
     // pos beyond last char of string?
-    if (pos > (ssize_t) (string->len - 1)) {
+    if (pos > (ptrdiff_t) (string->len - 1)) {
         fprintf(stderr, "Critical: g_string_erase: pos (%zd) > string->len - 1 (%zu)\n", pos, string->len - 1);
         return string;
     }
 
     // do we erase to the end of the string?
-    if (len < 0 || (pos + len) >= (ssize_t) string->len) {
+    if (len < 0 || (pos + len) >= (ptrdiff_t) string->len) {
         string->str[pos] = '\0';
         string->len = pos;
         return string;

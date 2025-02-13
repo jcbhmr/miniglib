@@ -13,30 +13,22 @@ printf("👋 Hello %.*s!\n", (int) name->len, name->str);
 
 ## Installation
 
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=FFFFFF)
+
+TODO: Publish to a library repository or something
+
 ```sh
 git submodule add https://github.com/jcbhmr/miniglib.git
-git -C ./miniglib switch v2.81.0
+git -C ./miniglib switch v1.0.0
 ```
-
-<details><summary>Using CMake</summary>
-
-```cmake
-add_subdirectory(miniglib)
-target_link_libraries(myapp PRIVATE miniglib::miniglib)
-```
-
-</details>
-
-<details><summary>Using the build output with a C compiler directly</summary>
 
 ```sh
-cmake -D CMAKE_BUILD_TYPE=Release -B ./miniglib/build/ -S ./miniglib/
-cc -I ./miniglib/include/ -L ./miniglib/build/ -l miniglib -o ./myapp ./myapp.c
+cc -std=c23 -I ./miniglib/include/ -o ./build/hello-world ./miniglib/src/*.c ./src/*.c
 ```
 
-</details>
-
 ## Usage
+
+![C](https://img.shields.io/badge/C-222222?style=for-the-badge&logo=C&logoColor=A8B9CC)
 
 After downloading the library and configuring your build system to link against it, you can use the following code snippets to get started.
 
@@ -53,59 +45,9 @@ int main() {
 }
 ```
 
-```c
-#include <stddef.h>
-#include <stdio.h>
-#include <miniglib.h>
-
-int main() {
-    GArray *names = g_array_new(false, false, sizeof(GString *));
-    g_array_append_val(names, g_string_new("Alan Turing"));
-    g_array_append_val(names, g_string_new("Ada Lovelace"));
-    g_array_append_val(names, g_string_new("Grace Hopper"));
-    for (size_t i = 0; i < names->len; i++) {
-        GString *name = g_array_index(names, GString *, i);
-        printf("Name #%d: %.*s\n", (int) i, (int) name->len, name->str);
-    }
-    for (size_t i = 0; i < names->len; i++) {
-        GString *name = g_array_index(names, GString *, i);
-        g_string_free(name, true);
-    }
-    g_array_free(names, true);
-}
-```
-
-```c
-#include <stddef.h>
-#include <stdio.h>
-#include <miniglib.h>
-
-int main() {
-    GHashTable *names = g_hash_table_new(g_str_hash, g_str_equal);
-    g_hash_table_insert(ages, g_string_new("Alan"), g_string_new("Turing"));
-    g_hash_table_insert(ages, g_string_new("Ada"), g_string_new("Lovelace"));
-    g_hash_table_insert(ages, g_string_new("Grace"), g_string_new("Hopper"));
-    for (size_t i = 0; i < ages->num_slots; i++) {
-        if (!ages->slots[i].used) {
-            continue;
-        }
-        GString *key = ages->slots[i].key;
-        GString *value = ages->slots[i].value;
-        printf("%.*s: %.*s\n", (int) key->len, key->str, (int) value->len, value->str);
-    }
-    for (size_t i = 0; i < ages->num_slots; i++) {
-        if (!ages->slots[i].used) {
-            continue;
-        }
-        GString *key = ages->slots[i].key;
-        GString *value = ages->slots[i].value;
-        g_string_free(key, true);
-        g_string_free(value, true);
-    }
-    g_hash_table_destroy(ages);
-}
-```
-
 ## Development
 
+![CMake](https://img.shields.io/badge/CMake-064F8C?style=for-the-badge&logo=CMake&logoColor=FFFFFF)
+![C](https://img.shields.io/badge/C-222222?style=for-the-badge&logo=C&logoColor=A8B9CC)
 
+TODO: Write this section

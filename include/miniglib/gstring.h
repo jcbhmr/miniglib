@@ -32,11 +32,6 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifdef _MSC_VER
-#include <BaseTsd.h>
-typedef SSIZE_T ssize_t;
-#endif
-
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -44,6 +39,7 @@ typedef SSIZE_T ssize_t;
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
+#include <stddef.h>
 
 #define GSTRING_MIN_BUF_SIZE 32
 
@@ -58,21 +54,21 @@ typedef struct GString {
 
 GString* g_string_new(const char *init);
 GString* g_string_new_len(const char *init, size_t len);
-GString* g_string_sized_new(ssize_t dfl_size);
+GString* g_string_sized_new(ptrdiff_t dfl_size);
 GString* g_string_assign(GString *string, const char *rval);
 GString* g_string_append(GString *string, const char *val);
 GString* g_string_append_c(GString *string, char c);
-GString* g_string_append_len(GString *string, const char *val, ssize_t len);
+GString* g_string_append_len(GString *string, const char *val, ptrdiff_t len);
 GString* g_string_prepend(GString *string, const char *val);
 GString* g_string_prepend_c(GString *string, char c);
-GString* g_string_prepend_len(GString *string, const char *val, ssize_t len);
-GString* g_string_insert(GString *string, ssize_t pos, const char *val);
-GString* g_string_insert_c(GString *string, ssize_t pos, char c);
-GString* g_string_insert_len(GString *string, ssize_t pos, const char *val, ssize_t len);
+GString* g_string_prepend_len(GString *string, const char *val, ptrdiff_t len);
+GString* g_string_insert(GString *string, ptrdiff_t pos, const char *val);
+GString* g_string_insert_c(GString *string, ptrdiff_t pos, char c);
+GString* g_string_insert_len(GString *string, ptrdiff_t pos, const char *val, ptrdiff_t len);
 GString* g_string_overwrite(GString *string, size_t pos, const char *val);
-GString* g_string_overwrite_len(GString *string, size_t pos, const char *val, ssize_t len);
+GString* g_string_overwrite_len(GString *string, size_t pos, const char *val, ptrdiff_t len);
 unsigned int g_string_replace(GString *string, const char *find, const char *replace, unsigned int limit);
-GString* g_string_erase(GString *string, ssize_t pos, ssize_t len);
+GString* g_string_erase(GString *string, ptrdiff_t pos, ptrdiff_t len);
 GString* g_string_truncate(GString *string, size_t len);
 void g_string_vprintf(GString *string, const char *format, va_list args);
 void g_string_append_vprintf(GString *string, const char *format, va_list args);
