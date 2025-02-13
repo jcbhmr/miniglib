@@ -30,7 +30,7 @@ cc -std=c23 -I ./miniglib/include/ -o ./build/hello-world ./miniglib/src/*.c ./s
 
 ![C](https://img.shields.io/badge/C-222222?style=for-the-badge&logo=C&logoColor=A8B9CC)
 
-After downloading the library and configuring your build system to link against it, you can use the following code snippets to get started.
+After downloading the library and configuring your build system to incorporate this library, you can use the following code snippets to get started.
 
 ```c
 #include <stdio.h>
