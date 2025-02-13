@@ -42,6 +42,7 @@ int main() {
     printf("%.*s says hello to %.*s\n", (int) name1->len, name1->str, (int) name2->len, name2->str);
     g_string_free(name1, true);
     g_string_free(name2, true);
+    return 0;
 }
 ```
 
